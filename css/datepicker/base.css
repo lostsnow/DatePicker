@@ -42,21 +42,28 @@ div.datepicker table td {
   text-align: center;
   padding: 0;
   margin: 0;
+  height:30px;
 }
 div.datepicker th {
   text-align: center;
   color: #666666;
   font-weight: normal;
-  padding:0;
+  padding: 0;
+}
+div.datepicker tr.datepickerDoW th {
+  padding:5px;;
+  height: 20px;
+  width: 22px;
 }
 div.datepicker tbody a {
   display: block;
+  padding: 5px;
+  cursor: pointer;
 }
 .datepickerDays a {
-  width: 20px;
-  line-height: 16px;
-  height: 16px;
-  padding-right: 2px;
+  width: 22px;
+  line-height: 20px;
+  height: 20px;
 }
 .datepickerYears a,
 .datepickerMonths a{
@@ -115,20 +122,15 @@ div.datepicker th a.datepickerGoPrev {
   display:none;
 }
 div.datepicker th a.datepickerMonth {
-  width:114px;
+  width: 100%;
   display:block;
+  padding-left: 0;
+  padding-right: 0;
 }
 /* Only display the previous/next arrows on the first/last calendars */
 div.datepicker .datepickerFirstView th a.datepickerGoPrev,
 div.datepicker .datepickerLastView th a.datepickerGoNext {
   display:block;
-}
-/* Compensate for the space lost by not having a previous arrow */
-div.datepicker th a.datepickerMonth {
-  margin-left:20px;
-}
-div.datepicker .datepickerFirstView th a.datepickerMonth {
-  margin-left:0;
 }
 /* Day mode calendar body */
 table.datepickerViewDays tbody.datepickerMonths,

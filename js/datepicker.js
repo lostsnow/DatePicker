@@ -35,9 +35,9 @@
           '<table cellspacing="0" cellpadding="0">',
             '<thead>',
               '<tr>',
-                '<th colspan="7"><a class="datepickerGoPrev" href="#"><span><%=prev%></span></a>',
-                '<a class="datepickerMonth" href="#"><span></span></a>',
-                '<a class="datepickerGoNext" href="#"><span><%=next%></span></a></th>',
+                '<th><a class="datepickerGoPrev" href="#"><span><%=prev%></span></a></th>',
+                '<th colspan="5"><a class="datepickerMonth" href="#"><span></span></a></th>',
+                '<th><a class="datepickerGoNext" href="#"><span><%=next%></span></a></th>',
               '</tr>',
               '<tr class="datepickerDoW">',
                 '<th><span><%=day1%></span></th>',
@@ -302,10 +302,10 @@
         var cal = $(el);
         var currentCal = Math.floor(options.calendars/2), date, data, dow, month, cnt = 0, days, indic, indic2, html, tblCal;
         if (typeof options.minDate === 'string') {
-          options.minDate = new Date(options.minDate);
+          options.minDate = new Date(options.minDate.replace(/-/g, '/'));
         }
         if (typeof options.maxDate === 'string') {
-          options.maxDate = new Date(options.maxDate);
+          options.maxDate = new Date(options.maxDate.replace(/-/g, '/'));
         }
         
         cal.find('td>table tbody').remove();
@@ -736,7 +736,7 @@
             top = pos.top  - calEl.offsetHeight;
           }
           if(top < viewPort.t) {
-            top = pos.top + this.offsetHeight + calEl.offsetHeight;
+            top = pos.top + this.offsetHeight;
           }
           if(left + calEl.offsetWidth > viewPort.l + viewPort.w) {
             left = pos.left - calEl.offsetWidth;
