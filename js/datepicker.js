@@ -358,11 +358,11 @@
               data.weeks[indic].days[indic2].classname.push('datepickerToday');
             }
 
-            if (date < options.minDate) {
+            if (options.minDate && date < options.minDate) {
               data.weeks[indic].days[indic2].classname.push('datepickerMinDate');
             }
 
-            if (date > options.maxDate) {
+            if (options.maxDate && date > options.maxDate) {
               data.weeks[indic].days[indic2].classname.push('datepickerMaxDate');
             }
 
@@ -501,6 +501,8 @@
           var tblEl = parentEl.parent().parent().parent();
           var tblIndex = $('table', this).index(tblEl.get(0)) - 1;
           var tmp = new Date(options.current);
+          var tmpStart = new Date(options.current);
+          var tmpEnd = new Date(options.current);
           var changed = false;
           var changedRange = false;
           var fillIt = false;
@@ -512,13 +514,43 @@
             if (el.hasClass('datepickerMonth')) {
               // clicking on the title of a Month Datepicker
               tmp.addMonths(tblIndex - currentCal);
+              tmpStart.addMonths(tblIndex - currentCal);
+              tmpEnd.addMonths(tblIndex - currentCal);
               
               if(options.mode == 'range') {
                 // range, select the whole month
-                options.date[0] = (tmp.setHours(0,0,0,0)).valueOf();
-                tmp.addDays(tmp.getMaxDays()-1);
-                tmp.setHours(23,59,59,0);
-                options.date[1] = tmp.valueOf();
+
+                // Check if the start date is allowed
+                var minDate = options.minDate;
+                var maxDate = options.maxDate;
+
+                tmpStart.setHours(0,0,0,0);
+                tmpStart.setDate(1);
+
+                if (options.minDate != null) {
+                  if (tmpStart.getTime() < minDate.getTime() ){
+                    tmpStart.setTime(minDate.getTime());
+                  }
+                }
+                options.date[0] = tmpStart.valueOf();
+
+                // Check if the end date is allowed
+                tmpEnd.setDate(tmpEnd.getMaxDays());
+                tmpEnd.setHours(23,59,59,0);
+
+                if (options.maxDate != null) {
+                  if (tmpEnd.getTime() > maxDate.getTime()){
+                    tmpEnd.setTime(maxDate.getTime());
+                  }
+                }
+                options.date[1] = tmpEnd.valueOf();
+
+                if((options.maxDate != null && tmpStart.getTime() > maxDate.getTime())
+                    || (options.minDate != null && tmpEnd.getTime() < minDate.getTime())){
+                  options.date[0] = 0;
+                  options.date[1] = 0;
+                }
+
                 fillIt = true;
                 changed = true;
                 options.lastSel = false;
