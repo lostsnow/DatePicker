@@ -51,7 +51,9 @@ tbody.datepickerDays td.datepickerSelected {
 
 /* Grey out dates in the future */
 div.datepicker td.datepickerFuture a {
-  color:#DDDDDD;
+}
+div.datepicker td.datepickerMinDate a, div.datepicker td.datepickerMaxDate a {
+  color:#999;
 }
 
 /* yellow cell background on hover */

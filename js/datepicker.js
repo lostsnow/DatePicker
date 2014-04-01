@@ -170,6 +170,14 @@
          */  
         starts: 0,
         /**
+         * Specify a minimum date
+         */  
+        minDate: null,
+        /**
+         * Specify a maximum date
+         */  
+        maxDate: null,
+        /**
          * Previous link text.  Default '&#9664;' (Unicode left arrow)
          */
         prev: '&#9664;',
@@ -293,6 +301,12 @@
         var options = $(el).data('datepicker');
         var cal = $(el);
         var currentCal = Math.floor(options.calendars/2), date, data, dow, month, cnt = 0, days, indic, indic2, html, tblCal;
+        if (typeof options.minDate === 'string') {
+          options.minDate = new Date(options.minDate);
+        }
+        if (typeof options.maxDate === 'string') {
+          options.maxDate = new Date(options.maxDate);
+        }
         
         cal.find('td>table tbody').remove();
         for(var i = 0; i < options.calendars; i++) {
@@ -343,6 +357,15 @@
             if (today.getDate() == date.getDate() && today.getMonth() == date.getMonth() && today.getYear() == date.getYear()) {
               data.weeks[indic].days[indic2].classname.push('datepickerToday');
             }
+
+            if (date < options.minDate) {
+              data.weeks[indic].days[indic2].classname.push('datepickerMinDate');
+            }
+
+            if (date > options.maxDate) {
+              data.weeks[indic].days[indic2].classname.push('datepickerMaxDate');
+            }
+
             if (date > today) {
               // current month, date in future
               data.weeks[indic].days[indic2].classname.push('datepickerFuture');
@@ -526,7 +549,8 @@
               fillIt = true;
             }
             
-          } else if (parentEl.is('td') && !parentEl.hasClass('datepickerDisabled')) {
+          } else if (parentEl.is('td') && !parentEl.hasClass('datepickerDisabled')
+            && !parentEl.hasClass('datepickerMinDate') && !parentEl.hasClass('datepickerMaxDate')) {
             // clicking the calendar grid
             
             if(tblEl.eq(0).hasClass('datepickerViewMonths')) {
