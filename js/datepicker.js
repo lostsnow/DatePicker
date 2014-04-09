@@ -553,6 +553,7 @@
 
                 fillIt = true;
                 changed = true;
+                changedRange = true;
                 options.lastSel = false;
               } else if(options.calendars == 1) {
                 // single/multiple mode with a single calendar: swap between daily/monthly/yearly view.
